@@ -31,6 +31,9 @@ fi
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
     "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+    "https://github.com/WASasquatch/was-node-suite-comfyui"
+    "https://github.com/Fannovel16/comfyui_controlnet_aux"
+    "https://github.com/cubiq/ComfyUI_essentials"
 )
 
 WAN_JSON_MODELS=(
