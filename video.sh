@@ -26,11 +26,14 @@ if [[ -f requirements.txt ]]; then
 fi
 
 # ─────────────────────────────────────────────
-# 3. CONFIG
+# 3. CONFIG (Добавлены недостающие ноды)
 # ─────────────────────────────────────────────
 NODES=(
     "https://github.com/ltdrdata/ComfyUI-Manager"
     "https://github.com/kijai/ComfyUI-WanVideoWrapper"
+    "https://github.com/ltdrdata/ComfyUI-Impact-Pack"
+    "https://github.com/Fannovel16/comfyui_controlnet_aux"
+    "https://github.com/Derfuu/Derfuu_ComfyUI_ModdedNodes"
 )
 
 WAN_JSON_MODELS=(
@@ -81,32 +84,34 @@ download_files() {
 }
 
 # ─────────────────────────────────────────────
-# 5. Custom nodes
+# 5. Custom nodes (С автоматической установкой pip)
 # ─────────────────────────────────────────────
 mkdir -p custom_nodes
 
 for repo in "${NODES[@]}"; do
-    dir="${repo##*/}"
-    path="custom_nodes/${dir}"
-    requirements="${path}/requirements.txt"
-
+    dir_name=$(basename "$repo")
+    path="custom_nodes/${dir_name}"
+    
     if [[ -d "$path" ]]; then
-        echo "Updating node: $dir"
+        echo "Updating node: $dir_name"
         (cd "$path" && git pull)
     else
-        echo "Cloning node: $dir"
+        echo "Cloning node: $dir_name"
         git clone "$repo" "$path" --recursive
     fi
 
-    [[ -f "$requirements" ]] && pip install --no-cache-dir -r "$requirements"
+    # Автоматическая установка зависимостей для каждой ноды
+    if [[ -f "${path}/requirements.txt" ]]; then
+        echo "Installing requirements for $dir_name..."
+        pip install --no-cache-dir -r "${path}/requirements.txt"
+    fi
 done
 
 # ─────────────────────────────────────────────
-# 6. Download models (ПРАВИЛЬНЫЕ ПУТИ)
+# 6. Download models
 # ─────────────────────────────────────────────
 download_files "models/diffusion_models" "${WAN_JSON_MODELS[@]}"
 download_files "models/diffusion_models" "${WAN_FP8_MODELS[@]}"
-
 download_files "models/loras" "${LORA_MODELS[@]}"
 download_files "models/vae" "${VAE_MODELS[@]}"
 download_files "models/clip_vision" "${CLIP_VISION_MODELS[@]}"
@@ -117,4 +122,5 @@ download_files "models/upscale_models" "${UPSCALE_MODELS[@]}"
 # 7. Launch
 # ─────────────────────────────────────────────
 echo "=== Starting ComfyUI ==="
+# Используем порт из конфига Vast или стандартный 8188
 python main.py --listen 0.0.0.0 --port 8188
