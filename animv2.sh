@@ -22,7 +22,7 @@ NODES=(
     "https://github.com/kijai/ComfyUI-WanAnimatePreprocess"
     "https://github.com/rgthree/rgthree-comfy"
     "https://github.com/jnxmx/ComfyUI_HuggingFace_Downloader"
-    "https://github.com/ytk88/wfv"
+    "https://github.com/ytk88/wfv.git"
 )
 
 # ЗАГРУЗКА ФАЙЛОВ НУЖНЫХ
