@@ -70,9 +70,9 @@ DEFFUSION=(
 function provisioning_start() {
     echo ""
     echo "##############################################"
-    echo "# ебашим жоска и мрачно                      #"
-    echo "# gazik X-MODE setup 2025-2026               #"
-    echo "# бабки бабки                                #"
+    echo "# ytk                      #"
+    echo "# ytk               #"
+    echo "# ytk                                #"
     echo "##############################################"
     echo ""
 
@@ -94,13 +94,13 @@ function provisioning_start() {
      provisioning_get_files "${COMFYUI_DIR}/models/diffusion_models"     "${DEFFUSION[@]}"
 
     echo ""
-    echo "Газик настроил → Starting ComfyUI..."
+    echo "ytk настроил → Starting ComfyUI..."
     echo ""
 }
 
 function provisioning_clone_comfyui() {
     if [[ ! -d "${COMFYUI_DIR}" ]]; then
-        echo "Газик клонирует ComfyUI..."
+        echo "ytk клонирует ComfyUI..."
         git clone https://github.com/comfyanonymous/ComfyUI.git "${COMFYUI_DIR}"
     fi
     cd "${COMFYUI_DIR}"
@@ -108,21 +108,21 @@ function provisioning_clone_comfyui() {
 
 function provisioning_install_base_reqs() {
     if [[ -f requirements.txt ]]; then
-        echo "Газик установливает base requirements..."
+        echo "ytk установливает base requirements..."
         pip install --no-cache-dir -r requirements.txt
     fi
 }
 
 function provisioning_get_apt_packages() {
     if [[ ${#APT_PACKAGES[@]} -gt 0 ]]; then
-        echo "Газик устанавливает apt packages..."
+        echo "ytk устанавливает apt packages..."
         sudo apt update && sudo apt install -y "${APT_PACKAGES[@]}"
     fi
 }
 
 function provisioning_get_pip_packages() {
     if [[ ${#PIP_PACKAGES[@]} -gt 0 ]]; then
-        echo "Газик устанавливает extra pip packages..."
+        echo "ytk устанавливает extra pip packages..."
         pip install --no-cache-dir "${PIP_PACKAGES[@]}"
     fi
 }
@@ -180,6 +180,6 @@ if [[ ! -f /.noprovisioning ]]; then
 fi
 
 # Запуск ComfyUI
-echo "=== Газик запускает ComfyUI ==="
+echo "=== ytk запускает ComfyUI ==="
 cd "${COMFYUI_DIR}"
 python main.py --listen 0.0.0.0 --port 8188
